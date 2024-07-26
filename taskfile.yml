@@ -1,0 +1,21 @@
+version: "3"
+
+vars:
+  SERVER_PATH: "cmd/server"
+
+tasks:
+  start:
+    cmd: go run {{ .SERVER_PATH }}/main.go
+    desc: Start server
+
+  build:
+    cmd: go build -o bin/server-bin {{ .SERVER_PATH }}/main.go
+    desc: Build server
+
+  mod:
+    cmds: [go mod download, go mod tidy]
+    desc: Tidy go modules
+    aliases: [mod]
+  mod:clean:
+    cmd: go clean -modcache
+    desc: Clear go modules cache
