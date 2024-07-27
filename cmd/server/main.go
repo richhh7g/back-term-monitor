@@ -6,9 +6,10 @@ import (
 	"path"
 
 	"github.com/eduardolat/goeasyi18n"
-	mongo_client "github.com/richhh7g/term-alarms/infra/data/client/mongo"
-	mongo_document "github.com/richhh7g/term-alarms/infra/data/client/mongo/document"
-	mongo_repository "github.com/richhh7g/term-alarms/infra/data/client/mongo/repository"
+
+	mongo_client "github.com/richhh7g/term-alarms/internal/infra/data/client/mongo"
+	mongo_document "github.com/richhh7g/term-alarms/internal/infra/data/client/mongo/document"
+	mongo_repository "github.com/richhh7g/term-alarms/internal/infra/data/client/mongo/repository"
 	"github.com/richhh7g/term-alarms/pkg/environment"
 	"github.com/richhh7g/term-alarms/pkg/localization"
 	"go.mongodb.org/mongo-driver/bson/primitive"
