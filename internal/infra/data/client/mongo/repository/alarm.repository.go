@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	mongo_client "github.com/richhh7g/term-alarms/infra/data/client/mongo"
-	mongo_document "github.com/richhh7g/term-alarms/infra/data/client/mongo/document"
+	mongo_client "github.com/richhh7g/term-alarms/internal/infra/data/client/mongo"
+	mongo_document "github.com/richhh7g/term-alarms/internal/infra/data/client/mongo/document"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"

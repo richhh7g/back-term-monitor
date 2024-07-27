@@ -15,8 +15,9 @@ Este projeto e o backend da API do Term Alarms para monitorar concorrentes que u
 | Ferramenta | Versão | Descrição
 | - | - | -
 | `Golang` | `>= v1.19.0` | Versão [superior](https://golang.org/dl/) ou [igual](https://golang.org/dl/#go1.19) a `1.19.0`.
-| `MongoDB` | `>= v4.4.0` | Versão [superior](https://www.mongodb.com/docs/manual/release-notes/4.4/) ou [igual](https://www.mongodb.com/docs/manual/release-notes/4.4/#mongodb-4-4-0).
-| `Docker CLI` | `>= v20.10.0` | Versão [superior](https://github.com/docker/cli/tags) ou [igual](https://github.com/docker/cli/releases/tag/v20.10.0).
+| `MongoDB` | `>= v4.4.0` | Versão [superior](https://www.mongodb.com/docs/manual/release-notes/4.4/) ou [igual](https://www.mongodb.com/docs/manual/release-notes/4.4/#mongodb-4-4-0) a `4.4.0`.
+| `GolangMigrate` | `>= v4.15.0` | Versão [superior](https://github.com/golang-migrate/migrate/releases) ou [igual](https://github.com/golang-migrate/migrate/releases/tag/v4.15.0) a `4.15.0`.
+| `Docker CLI` | `>= v20.10.0` | Versão [superior](https://github.com/docker/cli/tags) ou [igual](https://github.com/docker/cli/releases/tag/v20.10.0) a `20.10.0`.
 | `Docker Compose` | `>= v2.0.0` | Versão [superior](https://github.com/docker/compose/releases) ou [igual](https://github.com/docker/compose/releases/tag/v2.0.0) a `2.0.0`.
 
 ## Como usar e configurar o projeto
@@ -27,6 +28,34 @@ Crie um arquivo `.env` com as configurações necessárias. Você pode usar o ar
 
 ```bash
 cp cmd/server/.env.example cmd/server/.env
+```
+
+### Migrações
+
+Para gerenciar migrações do banco de dados `MongoDB`, você pode usar a ferramenta `migrate`. A seguir estão as instruções para criar, subir e voltar migrações.
+
+#### 1. Criar nova migração
+
+Para criar uma nova migração, execute o comando abaixo a partir do diretório raiz do projeto:
+
+```bash
+migrate create --ext json --dir "internal/infra/data/client/mongo/migration" --tz UTC nome_da_migração
+```
+
+#### 2. Subir Migrações
+
+Para aplicar as migrações, execute o comando abaixo a partir do diretório raiz do projeto:
+
+```bash
+migrate --path="internal/infra/data/client/mongo/migration" --database "mongodb://user:password@host:port/dbname?ssl=false&authSource=admin" up
+```
+
+#### 3. Voltar Migrações
+
+Para reverter as migrações, execute o comando abaixo a partir do diretório raiz do projeto:
+
+```bash
+migrate --path="internal/infra/data/client/mongo/migration" --database "mongodb://user:password@host:port/dbname?ssl=false&authSource=admin" down numeroDeMigraçõesParaReverter
 ```
 
 ### Executando Localmente
