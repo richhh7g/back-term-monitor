@@ -7,8 +7,11 @@ import (
 
 	"github.com/eduardolat/goeasyi18n"
 	mongo_client "github.com/richhh7g/term-alarms/infra/data/client/mongo"
+	mongo_document "github.com/richhh7g/term-alarms/infra/data/client/mongo/document"
+	mongo_repository "github.com/richhh7g/term-alarms/infra/data/client/mongo/repository"
 	"github.com/richhh7g/term-alarms/pkg/environment"
 	"github.com/richhh7g/term-alarms/pkg/localization"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func init() {
@@ -31,6 +34,18 @@ func main() {
 		panic(err)
 	}
 	defer client.Disconnect(ctx)
+
+	alarmRepository := mongo_repository.NewAlarmRepository(client)
+	alarmRepository.Create(ctx, &mongo_document.Alarm{
+		ID:    primitive.ObjectID{},
+		Email: "test@test.com",
+		Tags:  []string{"tag1", "tag2"},
+	})
+	alarm, err := alarmRepository.FindOneByEmail(ctx, "test@test.com")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(alarm)
 
 	localizationService := localization.NewLocalization(goeasyi18n.NewI18n())
 	localizationService.AddLanguages(map[localization.Language]string{
