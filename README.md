@@ -15,6 +15,7 @@ Este projeto e o backend da API do Term Alarms para monitorar concorrentes que u
 | Ferramenta | Versão | Descrição
 | - | - | -
 | `Golang` | `>= v1.19.0` | Versão [superior](https://golang.org/dl/) ou [igual](https://golang.org/dl/#go1.19) a `1.19.0`.
+| `MongoDB` | `>= v4.4.0` | Versão [superior](https://www.mongodb.com/docs/manual/release-notes/4.4/) ou [igual](https://www.mongodb.com/docs/manual/release-notes/4.4/#mongodb-4-4-0).
 | `Docker CLI` | `>= v20.10.0` | Versão [superior](https://github.com/docker/cli/tags) ou [igual](https://github.com/docker/cli/releases/tag/v20.10.0).
 | `Docker Compose` | `>= v2.0.0` | Versão [superior](https://github.com/docker/compose/releases) ou [igual](https://github.com/docker/compose/releases/tag/v2.0.0) a `2.0.0`.
 
@@ -25,12 +26,20 @@ Este projeto e o backend da API do Term Alarms para monitorar concorrentes que u
 Crie um arquivo `.env` com as configurações necessárias. Você pode usar o arquivo de exemplo `.env.example` como referência.
 
 ```bash
-cp .env.example .env
+cp cmd/server/.env.example cmd/server/.env
 ```
 
-### Executando Localmente:
+### Executando Localmente
 
-#### 1. Rodar o projeto
+#### 1. Subir banco de dados
+
+Para subir o banco de dados, execute o comando abaixo a partir do diretório raiz do projeto:
+
+```bash
+docker compose -f cmd/server/docker-compose.yml up mongo mongo-express
+```
+
+#### 2. Executar o backend
 
 Para rodar o backend do projeto, execute o comando abaixo a partir do diretório raiz do projeto:
 
@@ -38,7 +47,7 @@ Para rodar o backend do projeto, execute o comando abaixo a partir do diretório
 go run cmd/server/main.go
 ```
 
-### Executando com Docker Compose:
+### Executando com Docker Compose
 
 #### 1. Construir e executar os containers
 
