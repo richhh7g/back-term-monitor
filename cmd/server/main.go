@@ -27,5 +27,6 @@ func main() {
 		localization.PT_BR: path.Join("pkg", "localization", "locale", "pt_br.locale.yml"),
 	})
 
+	fmt.Println(environment.Get[string]("APP_ENV"))
 	fmt.Println(localizationService.T("error.not_found", nil))
 }
