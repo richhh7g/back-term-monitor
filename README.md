@@ -69,5 +69,5 @@ docker compose -f cmd/server/docker-compose.yml down
 Para monitorar o desempenho dos containers, execute o comando abaixo a partir do diretório raiz do projeto:
 
 ```bash
-docker compose stats
+docker compose -f cmd/server/docker-compose.yml stats
 ```

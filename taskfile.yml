@@ -22,7 +22,7 @@ tasks:
     cmd: docker compose -f {{ .SERVER_PATH }}/docker-compose.yml logs -f
     desc: Show logs from docker-compose
   docker:monitor:
-    cmd: docker compose stats
+    cmd: docker compose -f {{ .SERVER_PATH }}/docker-compose.yml stats
     desc: Show stats from docker-compose
 
   mod:
