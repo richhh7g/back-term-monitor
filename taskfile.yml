@@ -12,6 +12,19 @@ tasks:
     cmd: go build -o bin/server-bin {{ .SERVER_PATH }}/main.go
     desc: Build server
 
+  docker:up:
+    cmd: docker compose -f {{ .SERVER_PATH }}/docker-compose.yml up
+    desc: Building and running containers from docker-compose
+  docker:down:
+    cmd: docker compose -f {{ .SERVER_PATH }}/docker-compose.yml down
+    desc: Stopping and removing containers from docker-compose
+  docker:logs:
+    cmd: docker compose -f {{ .SERVER_PATH }}/docker-compose.yml logs -f
+    desc: Show logs from docker-compose
+  docker:monitor:
+    cmd: docker compose stats
+    desc: Show stats from docker-compose
+
   mod:
     cmds: [go mod download, go mod tidy]
     desc: Tidy go modules
