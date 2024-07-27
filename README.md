@@ -18,9 +18,9 @@ Este projeto e o backend da API do Term Alarms para monitorar concorrentes que u
 | `Docker CLI` | `>= v20.10.0` | Versão [superior](https://github.com/docker/cli/tags) ou [igual](https://github.com/docker/cli/releases/tag/v20.10.0).
 | `Docker Compose` | `>= v2.0.0` | Versão [superior](https://github.com/docker/compose/releases) ou [igual](https://github.com/docker/compose/releases/tag/v2.0.0) a `2.0.0`.
 
-## Como usar
+## Como usar e configurar o projeto
 
-### 1. Configurar as Variáveis de Ambiente
+### Variáveis de Ambiente
 
 Crie um arquivo `.env` com as configurações necessárias. Você pode usar o arquivo de exemplo `.env.example` como referência.
 
@@ -28,10 +28,46 @@ Crie um arquivo `.env` com as configurações necessárias. Você pode usar o ar
 cp .env.example .env
 ```
 
-### 2. Rodar o Projeto
+### Executando Localmente:
+
+#### 1. Rodar o projeto
 
 Para rodar o backend do projeto, execute o comando abaixo a partir do diretório raiz do projeto:
 
 ```bash
 go run cmd/server/main.go
+```
+
+### Executando com Docker Compose:
+
+#### 1. Construir e executar os containers
+
+Para rodar o projeto com o Docker Compose, execute o comando abaixo a partir do diretório raiz do projeto:
+
+```bash
+docker compose -f cmd/server/docker-compose.yml up
+```
+
+#### 2. Visualizar logs
+
+Para visualizar os logs, execute o comando abaixo a partir do diretório raiz do projeto:
+
+```bash
+docker compose -f cmd/server/docker-compose.yml logs -f
+```
+
+#### 3. Parar os containers
+
+Para parar os containers, execute o comando abaixo a partir do diretório raiz do projeto:
+
+```bash
+docker compose -f cmd/server/docker-compose.yml down
+```
+
+#### 4. Monitorar o desempenho dos containers
+
+Para monitorar o desempenho dos containers, execute o comando abaixo a partir do diretório raiz do projeto:
+
+```bash
+docker compose stats
 ```

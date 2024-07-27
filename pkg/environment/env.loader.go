@@ -3,6 +3,7 @@ package environment
 import (
 	"errors"
 	"fmt"
+	"os"
 	"path"
 
 	"github.com/go-playground/validator/v10"
@@ -57,9 +58,12 @@ func (l *envLoader) Load() error {
 		return fmt.Errorf("%w: %s", ErrConfigManager, err)
 	}
 
-	err = l.validate()
-	if err != nil {
-		return fmt.Errorf("%w: %s", ErrValidation, err)
+	configFileExists := l.envFileExists(path.Join(l.params.Path, l.params.File))
+	if configFileExists {
+		err = l.validate()
+		if err != nil {
+			return fmt.Errorf("%w: %s", ErrValidation, err)
+		}
 	}
 
 	return nil
@@ -77,17 +81,22 @@ func (l *envLoader) validate() error {
 func (l *envLoader) newConfigManager() error {
 	localConfigManager := viper.New()
 	localConfigManager.SetConfigName(fmt.Sprintf("%s_environment", path.Base(l.params.Path)))
-	localConfigManager.SetConfigType(l.params.Type)
-	localConfigManager.AddConfigPath(l.params.Path)
-	localConfigManager.SetConfigFile(path.Join(l.params.Path, l.params.File))
-	localConfigManager.AutomaticEnv()
 
-	err := localConfigManager.ReadInConfig()
-	if err != nil {
-		return err
+	configFilePath := path.Join(l.params.Path, l.params.File)
+	if l.envFileExists(configFilePath) {
+		localConfigManager.AddConfigPath(l.params.Path)
+		localConfigManager.SetConfigType(l.params.Type)
+		localConfigManager.SetConfigFile(configFilePath)
+
+		err := localConfigManager.ReadInConfig()
+		if err != nil {
+			return err
+		}
 	}
 
-	err = localConfigManager.Unmarshal(&envSchema)
+	localConfigManager.AutomaticEnv()
+
+	err := localConfigManager.Unmarshal(&envSchema)
 	if err != nil {
 		return err
 	}
@@ -95,4 +104,9 @@ func (l *envLoader) newConfigManager() error {
 	configManager = localConfigManager
 
 	return nil
+}
+
+func (l *envLoader) envFileExists(envPath string) bool {
+	_, err := os.Stat(envPath)
+	return !os.IsNotExist(err)
 }
