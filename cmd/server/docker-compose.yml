@@ -15,3 +15,40 @@ services:
         limits:
           cpus: "1.0"
           memory: "500MB"
+  mongo:
+    image: mongo
+    container_name: term-alarms-mongo
+    restart: always
+    ports:
+      - 27017:27017
+    env_file:
+      - .env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS}
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: "1000MB"
+  mongo-express:
+    image: mongo-express
+    container_name: term-alarms-mongo-web
+    restart: always
+    depends_on:
+      - mongo
+    ports:
+      - 8081:8081
+    env_file:
+      - .env
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_USER}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_PASS}
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_USER}:${MONGO_PASS}@mongo:${MONGO_PORT}
+      ME_CONFIG_BASICAUTH: false
+    deploy:
+      resources:
+        limits:
+          cpus: "0.4"
+          memory: "250MB"
+
