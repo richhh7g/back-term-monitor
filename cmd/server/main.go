@@ -7,6 +7,7 @@ import (
 
 	"github.com/eduardolat/goeasyi18n"
 
+	resend_client "github.com/richhh7g/term-alarms/internal/infra/data/client/email/resend"
 	mongo_client "github.com/richhh7g/term-alarms/internal/infra/data/client/mongo"
 	mongo_document "github.com/richhh7g/term-alarms/internal/infra/data/client/mongo/document"
 	mongo_repository "github.com/richhh7g/term-alarms/internal/infra/data/client/mongo/repository"
@@ -47,6 +48,17 @@ func main() {
 		panic(err)
 	}
 	fmt.Println(alarm)
+
+	resendClient := resend_client.NewResend()
+	result, err := resendClient.Send(ctx, &resend_client.SendEmailRequest{
+		To:      []string{"richhh7g@protonmail.com"},
+		Subject: "Email de teste",
+		Text:    "Esse é um email de teste",
+	})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(result)
 
 	localizationService := localization.NewLocalization(goeasyi18n.NewI18n())
 	localizationService.AddLanguages(map[localization.Language]string{
