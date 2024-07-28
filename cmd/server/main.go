@@ -7,6 +7,7 @@ import (
 
 	"github.com/eduardolat/goeasyi18n"
 
+	smtp_client "github.com/richhh7g/term-alarms/internal/infra/data/client/email/smtp"
 	mongo_client "github.com/richhh7g/term-alarms/internal/infra/data/client/mongo"
 	mongo_document "github.com/richhh7g/term-alarms/internal/infra/data/client/mongo/document"
 	mongo_repository "github.com/richhh7g/term-alarms/internal/infra/data/client/mongo/repository"
@@ -47,6 +48,19 @@ func main() {
 		panic(err)
 	}
 	fmt.Println(alarm)
+
+	smtpClient, err := smtp_client.NewSmtp(true, false)
+	if err != nil {
+		panic(err)
+	}
+	err = smtpClient.Send(ctx, &smtp_client.SendParams{
+		To:      []string{"richhh7g@protonmail.com"},
+		Subject: "Email de teste pelo SMTP",
+		Html:    "<h1>Esse é um email de teste pelo SMTP</h1>",
+	})
+	if err != nil {
+		panic(err)
+	}
 
 	localizationService := localization.NewLocalization(goeasyi18n.NewI18n())
 	localizationService.AddLanguages(map[localization.Language]string{

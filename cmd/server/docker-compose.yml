@@ -51,4 +51,20 @@ services:
         limits:
           cpus: "0.4"
           memory: "250MB"
-
+  mailer:
+    image: axllent/mailpit:v1.19
+    container_name: term-alarms-mailer
+    restart: always
+    ports:
+      - 8025:8025
+      - 1025:1025
+    environment:
+      MP_SMTP_REQUIRE_TLS: false
+      MP_SMTP_AUTH_ACCEPT_ANY: true
+      MP_SMTP_REQUIRE_STARTTLS: false
+      MP_SMTP_AUTH_ALLOW_INSECURE: true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.4"
+          memory: "250MB"
