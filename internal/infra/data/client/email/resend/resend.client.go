@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"net/mail"
 	"time"
 
 	"github.com/go-resty/resty/v2"
@@ -36,7 +37,12 @@ func (c *ResendImpl) Send(ctx context.Context, params *SendEmailRequest) (*SendE
 	var response SendEmailResponse
 
 	if params.From == "" {
-		params.From = environment.Get[string]("MAIL_SENDER")
+		mailAddress := mail.Address{
+			Name:    environment.Get[string]("MAIL_NAME"),
+			Address: environment.Get[string]("MAIL_SENDER"),
+		}
+
+		params.From = mailAddress.String()
 	}
 
 	resp, err := c.driver.R().
