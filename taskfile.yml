@@ -28,6 +28,10 @@ tasks:
     cmd: docker compose -f {{ .SERVER_PATH }}/docker-compose.yml stats
     desc: Show stats from docker-compose
 
+  generate:docs:
+    desc: Generate swagger docs
+    cmd: swag init -g cmd/server/main.go -ot go,yaml
+
   migration:generate:
     desc: Generate migration
     cmd: migrate create --ext json --dir "{{ .MONGO_MIGRATIONS_PATH }}" --tz UTC {{.CLI_ARGS}}
