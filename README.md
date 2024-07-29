@@ -109,3 +109,28 @@ Para monitorar o desempenho dos containers, execute o comando abaixo a partir do
 ```bash
 docker compose -f cmd/server/docker-compose.yml stats
 ```
+
+## Acessando a Documentação
+
+A documentação completa da API pode ser acessada através do seguinte link:
+[http://localhost:3000/docs/index.html](http://localhost:3000/docs/index.html)
+
+### Gerando a Documentação com Swagger
+
+Para gerar a documentação da API utilizando Swagger, siga os passos abaixo:
+
+#### 1. Instale o Swagger CLI
+
+Se ainda não tiver o Swagger CLI instalado, você pode instalá-lo globalmente com o seguinte comando:
+
+```sh
+go install github.com/swaggo/swag/cmd/swag@latest
+```
+
+#### 2. Gere a Documentação
+
+A partir do diretório raiz do projeto execute o comando
+
+```sh
+swag init -g cmd/server/main.go -ot go,yaml
+```
