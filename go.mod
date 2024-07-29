@@ -4,6 +4,7 @@ go 1.22.5
 
 require (
 	github.com/eduardolat/goeasyi18n v1.3.0
+	github.com/go-chi/chi/v5 v5.1.0
 	github.com/go-playground/validator/v10 v10.22.0
 	github.com/go-resty/resty/v2 v2.13.1
 	github.com/spf13/viper v1.19.0
