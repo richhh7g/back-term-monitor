@@ -22,6 +22,15 @@ func init() {
 	}
 }
 
+// @title Term Alarms
+// @version 1.0.0
+// @description API do Term Alarms para monitorar concorrentes que usam termos de marca em resultados patrocinados do Google.
+// @contact.name Richhh7g
+// @contact.url https://github.com/richhh7g
+// @contact.email richhh7g@protonmail.com
+// @license.name MIT
+// @license.url https://github.com/richhh7g/term-alarms/blob/main/LICENSE
+// @BasePath /
 func main() {
 	ctx := context.Background()
 
