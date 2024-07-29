@@ -4,6 +4,8 @@ import (
 	"context"
 	"path"
 
+	_ "github.com/richhh7g/term-alarms/docs"
+
 	api_config "github.com/richhh7g/term-alarms/internal/app/api/config"
 	mongo_client "github.com/richhh7g/term-alarms/internal/infra/data/client/mongo"
 	"github.com/richhh7g/term-alarms/pkg/environment"
