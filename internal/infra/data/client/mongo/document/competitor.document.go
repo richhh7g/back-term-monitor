@@ -5,10 +5,11 @@ import (
 )
 
 type Competitor struct {
-	ID       primitive.ObjectID  `bson:"_id,omitempty"`
-	FoundAt  primitive.Timestamp `bson:"found_at"`
-	Device   string              `bson:"device"`
-	BrandID  primitive.ObjectID  `bson:"brand_id"`
-	Location string              `bson:"location"`
-	Domain   string              `bson:"domain"`
+	ID        primitive.ObjectID  `bson:"_id,omitempty"`
+	CreatedAt primitive.Timestamp `bson:"created_at"`
+	FoundAt   primitive.Timestamp `bson:"found_at"`
+	Device    string              `bson:"device"`
+	BrandID   primitive.ObjectID  `bson:"brand_id"`
+	Location  string              `bson:"location"`
+	Domain    string              `bson:"domain"`
 }
