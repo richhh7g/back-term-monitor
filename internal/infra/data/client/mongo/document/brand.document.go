@@ -4,6 +4,12 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+const (
+	BrandErrorStatus   = "error"
+	BrandSuccessStatus = "success"
+	BrandPendingStatus = "pending"
+)
+
 type Brand struct {
 	ID         primitive.ObjectID   `bson:"_id,omitempty"`
 	CreatedAt  primitive.Timestamp  `bson:"created_at"`
