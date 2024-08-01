@@ -3,9 +3,9 @@ package brand_usecase
 import (
 	"context"
 
-	"github.com/richhh7g/term-alarms/internal/domain/model"
-	brand_datasource "github.com/richhh7g/term-alarms/internal/infra/data/brand"
-	"github.com/richhh7g/term-alarms/pkg/localization"
+	"github.com/richhh7g/back-term-monitor/internal/domain/model"
+	brand_datasource "github.com/richhh7g/back-term-monitor/internal/infra/data/brand"
+	"github.com/richhh7g/back-term-monitor/pkg/localization"
 )
 
 type CreateBrand interface {

@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/richhh7g/term-alarms/pkg/environment"
+	"github.com/richhh7g/back-term-monitor/pkg/environment"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )

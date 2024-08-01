@@ -3,9 +3,9 @@ package brand_datasource
 import (
 	"context"
 
-	"github.com/richhh7g/term-alarms/internal/domain/model"
-	mongo_document "github.com/richhh7g/term-alarms/internal/infra/data/client/mongo/document"
-	mongo_repository "github.com/richhh7g/term-alarms/internal/infra/data/client/mongo/repository"
+	"github.com/richhh7g/back-term-monitor/internal/domain/model"
+	mongo_document "github.com/richhh7g/back-term-monitor/internal/infra/data/client/mongo/document"
+	mongo_repository "github.com/richhh7g/back-term-monitor/internal/infra/data/client/mongo/repository"
 )
 
 type Brand interface {

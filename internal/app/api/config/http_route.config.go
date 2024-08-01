@@ -6,7 +6,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
-	"github.com/richhh7g/term-alarms/internal/app/api/route"
+	"github.com/richhh7g/back-term-monitor/internal/app/api/route"
 	httpSwagger "github.com/swaggo/http-swagger/v2"
 )
 

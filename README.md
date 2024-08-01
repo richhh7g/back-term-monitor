@@ -1,7 +1,7 @@
-# Term Alarms | Backend
+# Term Monitor | Backend
 
 <p align="center">
-  <a href="https://github.com/richhh7g/term-alarms" target="_blank">
+  <a href="https://github.com/richhh7g/back-term-monitor" target="_blank">
     <img src="https://term-monitor.s3.amazonaws.com/monitor.png" alt="Term Alarms" height="150" width=325"/>
   </a>
 </p>

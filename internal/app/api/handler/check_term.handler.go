@@ -7,14 +7,14 @@ import (
 
 	"github.com/eduardolat/goeasyi18n"
 	"github.com/go-playground/validator/v10"
-	"github.com/richhh7g/term-alarms/internal/app/api/response"
-	"github.com/richhh7g/term-alarms/internal/domain/model"
-	brand_usecase "github.com/richhh7g/term-alarms/internal/domain/usecase/brand"
-	brand_datasource "github.com/richhh7g/term-alarms/internal/infra/data/brand"
-	mongo_client "github.com/richhh7g/term-alarms/internal/infra/data/client/mongo"
-	mongo_repository "github.com/richhh7g/term-alarms/internal/infra/data/client/mongo/repository"
-	"github.com/richhh7g/term-alarms/pkg/environment"
-	"github.com/richhh7g/term-alarms/pkg/localization"
+	"github.com/richhh7g/back-term-monitor/internal/app/api/response"
+	"github.com/richhh7g/back-term-monitor/internal/domain/model"
+	brand_usecase "github.com/richhh7g/back-term-monitor/internal/domain/usecase/brand"
+	brand_datasource "github.com/richhh7g/back-term-monitor/internal/infra/data/brand"
+	mongo_client "github.com/richhh7g/back-term-monitor/internal/infra/data/client/mongo"
+	mongo_repository "github.com/richhh7g/back-term-monitor/internal/infra/data/client/mongo/repository"
+	"github.com/richhh7g/back-term-monitor/pkg/environment"
+	"github.com/richhh7g/back-term-monitor/pkg/localization"
 )
 
 // @Summary Checar termos de marca
