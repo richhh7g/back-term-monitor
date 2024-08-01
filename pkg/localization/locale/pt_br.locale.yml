@@ -1,2 +1,7 @@
-- Key: "error.not_found"
-  Default: "Não foi encontrado."
+# Server Messages
+- Key: "server.error.internal"
+  Default: "Erro interno do servidor."
+
+# Brand Messages
+- Key: "brand.success.create"
+  Default: "Dentro de 5 minutos receberá um e-mail com a lista de potenciais marcas que usam esses termos de pesquisa."
