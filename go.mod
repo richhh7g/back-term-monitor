@@ -8,6 +8,7 @@ require (
 	github.com/go-chi/cors v1.2.1
 	github.com/go-playground/validator/v10 v10.22.0
 	github.com/go-resty/resty/v2 v2.13.1
+	github.com/robfig/cron/v3 v3.0.1
 	github.com/spf13/viper v1.19.0
 	github.com/swaggo/http-swagger/v2 v2.0.2
 	github.com/swaggo/swag v1.16.3
