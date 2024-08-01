@@ -2,7 +2,7 @@ package route
 
 import (
 	"github.com/go-chi/chi/v5"
-	"github.com/richhh7g/term-alarms/internal/app/api/handler"
+	"github.com/richhh7g/back-term-monitor/internal/app/api/handler"
 )
 
 type ApiImpl struct {

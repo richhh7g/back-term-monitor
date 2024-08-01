@@ -4,10 +4,10 @@ import (
 	"context"
 	"path"
 
-	_ "github.com/richhh7g/term-alarms/docs"
+	_ "github.com/richhh7g/back-term-monitor/docs"
 
-	api_config "github.com/richhh7g/term-alarms/internal/app/api/config"
-	"github.com/richhh7g/term-alarms/pkg/environment"
+	api_config "github.com/richhh7g/back-term-monitor/internal/app/api/config"
+	"github.com/richhh7g/back-term-monitor/pkg/environment"
 )
 
 func init() {

@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/go-resty/resty/v2"
-	"github.com/richhh7g/term-alarms/pkg/environment"
+	"github.com/richhh7g/back-term-monitor/pkg/environment"
 )
 
 type Resend interface {

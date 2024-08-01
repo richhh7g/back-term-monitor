@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   backend:
-    container_name: term-alarms-server
+    container_name: term-monitor-server
     build:
       context: ../../.
       dockerfile: cmd/server/Dockerfile
@@ -17,7 +17,7 @@ services:
           memory: "500MB"
   mongo:
     image: mongo
-    container_name: term-alarms-mongo
+    container_name: term-monitor-mongo
     restart: always
     ports:
       - 27017:27017
@@ -33,7 +33,7 @@ services:
           memory: "1000MB"
   mongo-express:
     image: mongo-express
-    container_name: term-alarms-mongo-web
+    container_name: term-monitor-mongo-web
     restart: always
     depends_on:
       - mongo
@@ -53,7 +53,7 @@ services:
           memory: "250MB"
   mailer:
     image: axllent/mailpit:v1.19
-    container_name: term-alarms-mailer
+    container_name: term-monitor-mailer
     restart: always
     ports:
       - 8025:8025

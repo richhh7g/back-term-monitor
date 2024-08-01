@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/richhh7g/term-alarms/pkg/environment"
+	"github.com/richhh7g/back-term-monitor/pkg/environment"
 )
 
 type ServerConfig struct {
