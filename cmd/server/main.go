@@ -7,6 +7,7 @@ import (
 	_ "github.com/richhh7g/back-term-monitor/docs"
 
 	api_config "github.com/richhh7g/back-term-monitor/internal/app/api/config"
+	schedule_config "github.com/richhh7g/back-term-monitor/internal/app/scheduler/config"
 	"github.com/richhh7g/back-term-monitor/pkg/environment"
 )
 
@@ -32,6 +33,9 @@ func init() {
 // @BasePath /api
 func main() {
 	ctx := context.Background()
+
+	scheduleConfig := schedule_config.NewSchedulerConfig()
+	scheduleConfig.Configure()
 
 	serverConfig := api_config.NewServerConfig(ctx)
 	err := serverConfig.Configure()
