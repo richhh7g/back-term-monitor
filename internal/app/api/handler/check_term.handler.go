@@ -17,6 +17,14 @@ import (
 	"github.com/richhh7g/term-alarms/pkg/localization"
 )
 
+// @Summary Checar termos de marca
+// @Description Faça a checagem de termos de marca nos resultados de pesquisa do Google.
+// @Tags v1, Termos
+// @Accept json
+// @Produce json
+// @Param request body CheckTermBody true "Corpo da requisição"
+// @Success 200
+// @Router /v1/check-term [POST]
 func NewCheckTermHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
