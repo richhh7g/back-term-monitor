@@ -5,10 +5,9 @@ import (
 	"net/http"
 	"path"
 
-	"github.com/eduardolat/goeasyi18n"
 	"github.com/go-playground/validator/v10"
 	"github.com/richhh7g/back-term-monitor/internal/app/api/response"
-	"github.com/richhh7g/back-term-monitor/internal/domain/model"
+	brand_model "github.com/richhh7g/back-term-monitor/internal/domain/model/brand"
 	brand_usecase "github.com/richhh7g/back-term-monitor/internal/domain/usecase/brand"
 	brand_datasource "github.com/richhh7g/back-term-monitor/internal/infra/data/brand"
 	mongo_client "github.com/richhh7g/back-term-monitor/internal/infra/data/client/mongo"
@@ -57,15 +56,15 @@ func NewCheckTermHandler(w http.ResponseWriter, r *http.Request) {
 	defer mongoClient.Disconnect(ctx)
 
 	brandRepository := mongo_repository.NewBrandRepository(mongoClient)
-	brandDatasource := brand_datasource.NewBrandDataSource(brandRepository)
-	localizationService := localization.NewLocalization(goeasyi18n.NewI18n())
+	brandDatasource := brand_datasource.NewBrandDbDataSource(brandRepository)
+	localizationService := localization.NewLocalization()
 	localizationService.AddLanguages(map[localization.Language]string{
 		localization.EN_US: path.Join("pkg", "localization", "locale", "en_us.locale.yml"),
 		localization.PT_BR: path.Join("pkg", "localization", "locale", "pt_br.locale.yml"),
 	})
 
 	brandUseCase := brand_usecase.NewCreateBrandUseCase(localizationService, brandDatasource)
-	result, err := brandUseCase.Exec(ctx, &model.CreateBrandInputModel{
+	result, err := brandUseCase.Exec(ctx, &brand_model.CreateBrandInputModel{
 		Email: bodyParsed.Email,
 		Terms: bodyParsed.Termos,
 	})
