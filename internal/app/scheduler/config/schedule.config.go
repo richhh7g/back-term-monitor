@@ -11,6 +11,5 @@ func NewSchedulerConfig() *Scheduler {
 }
 
 func (s *Scheduler) Configure() {
-	schedulerManager := schedule.NewScheduleManager()
-	schedulerManager.Start()
+	schedule.NewScheduleManager()
 }
