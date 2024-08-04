@@ -15,4 +15,6 @@ type EnvSchema struct {
 	MAIL_SENDER     string `validate:"required"`
 	RESEND_BASE_URL string `validate:"required,url"`
 	RESEND_API_KEY  string `validate:"required"`
+	SERP_BASE_URL   string `validate:"required,url"`
+	SERP_API_KEY    string `validate:"required"`
 }
