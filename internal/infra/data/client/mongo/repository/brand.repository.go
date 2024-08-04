@@ -6,6 +6,7 @@ import (
 
 	mongo_client "github.com/richhh7g/back-term-monitor/internal/infra/data/client/mongo"
 	mongo_document "github.com/richhh7g/back-term-monitor/internal/infra/data/client/mongo/document"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -16,10 +17,17 @@ type CreateBrandParams struct {
 	BrandTerms []string
 }
 
+type FindOneBrandByParams struct {
+	ID     string
+	Email  string
+	Status string
+}
+
 const brandCollectionName = "brand"
 
 type BrandRepository interface {
 	Create(ctx context.Context, input *CreateBrandParams, opts ...*options.InsertOneOptions) (*mongo_document.Brand, error)
+	FindOneBy(ctx context.Context, input *FindOneBrandByParams, opts ...*options.FindOneOptions) (*mongo_document.Brand, error)
 }
 
 type BrandRepositoryImpl struct {
@@ -44,6 +52,36 @@ func (r *BrandRepositoryImpl) Create(ctx context.Context, input *CreateBrandPara
 	}
 
 	_, err := r.brandCollection.InsertOne(ctx, document, opts...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &document, nil
+}
+
+func (r *BrandRepositoryImpl) FindOneBy(ctx context.Context, input *FindOneBrandByParams, opts ...*options.FindOneOptions) (*mongo_document.Brand, error) {
+	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+
+	var document mongo_document.Brand
+
+	filter := bson.M{}
+	if input.ID != "" {
+		filter["_id"] = input.ID
+	}
+	if input.Email != "" {
+		filter["email"] = input.Email
+	}
+	if input.Status != "" {
+		filter["status"] = input.Status
+	}
+
+	err := r.brandCollection.FindOne(ctx, filter, opts...).Decode(&document)
+
+	if err == mongo.ErrNoDocuments {
+		return nil, mongo.ErrNoDocuments
+	}
+
 	if err != nil {
 		return nil, err
 	}
