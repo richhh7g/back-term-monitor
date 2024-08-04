@@ -23,7 +23,9 @@ type TranslateParams struct {
 	Gender   *string
 }
 
-func NewLocalization(driver *goeasyi18n.I18n) Localization {
+func NewLocalization() Localization {
+	driver := goeasyi18n.NewI18n()
+
 	return &localizationImpl{
 		driver: driver,
 	}
