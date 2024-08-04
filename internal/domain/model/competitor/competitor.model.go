@@ -34,6 +34,13 @@ type CompetitorBaseModel struct {
 	BrandID string
 }
 
+type CreateCompetitorInputModel struct {
+	City    City
+	Term    string
+	Device  Device
+	BrandID string
+}
+
 type CreateCompetitorDBInputModel struct {
 	Link        string
 	City        City
