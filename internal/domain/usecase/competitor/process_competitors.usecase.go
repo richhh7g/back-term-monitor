@@ -6,32 +6,35 @@ import (
 	competitor_model "github.com/richhh7g/back-term-monitor/internal/domain/model/competitor"
 	brand_datasource "github.com/richhh7g/back-term-monitor/internal/infra/data/brand"
 	competitor_datasource "github.com/richhh7g/back-term-monitor/internal/infra/data/competitor"
+	email_datasource "github.com/richhh7g/back-term-monitor/internal/infra/data/email"
 	"golang.org/x/exp/rand"
 )
 
 type ProcessCompetitors interface {
-	Exec(ctx context.Context) ([]*competitor_model.CompetitorTermBaseModel, error)
+	Exec(ctx context.Context) (bool, error)
 }
 
 type ProcessCompetitorsImpl struct {
+	emailDataSource      email_datasource.Email
 	brandDataSource      brand_datasource.Brand
 	competitorDataSource competitor_datasource.Competitor
 }
 
-func NewProcessCompetitorsUseCase(brandDataSource brand_datasource.Brand, competitorDataSource competitor_datasource.Competitor) ProcessCompetitors {
+func NewProcessCompetitorsUseCase(brandDataSource brand_datasource.Brand, competitorDataSource competitor_datasource.Competitor, emailDataSource email_datasource.Email) ProcessCompetitors {
 	return &ProcessCompetitorsImpl{
+		emailDataSource:      emailDataSource,
 		brandDataSource:      brandDataSource,
 		competitorDataSource: competitorDataSource,
 	}
 }
 
-func (u *ProcessCompetitorsImpl) Exec(ctx context.Context) ([]*competitor_model.CompetitorTermBaseModel, error) {
+func (u *ProcessCompetitorsImpl) Exec(ctx context.Context) (bool, error) {
 	brandDb, err := u.brandDataSource.FindProcessingBrand(ctx)
 	if err != nil {
-		return nil, err
+		return false, err
 	}
 	if brandDb == nil {
-		return nil, nil
+		return false, nil
 	}
 
 	var deviceSelected = u.randomDevice()
@@ -41,16 +44,24 @@ func (u *ProcessCompetitorsImpl) Exec(ctx context.Context) ([]*competitor_model.
 		competitorsTermsBaseModel = append(competitorsTermsBaseModel, u.loopForCities(ctx, term, brandDb.ID, deviceSelected))
 	}
 
+	err = u.emailDataSource.SendPotentialCompetitors(ctx, &email_datasource.SendPotentialCompetitorsParams{
+		Email: brandDb.Email,
+		Terms: competitorsTermsBaseModel,
+	})
+	if err != nil {
+		return false, err
+	}
+
 	isCompleted, err := u.brandDataSource.UpdateSuccess(ctx, brandDb.ID)
 	if err != nil {
-		return nil, err
+		return false, err
 	}
 
 	if !isCompleted {
-		return nil, nil
+		return false, nil
 	}
 
-	return competitorsTermsBaseModel, nil
+	return true, nil
 }
 
 func (u *ProcessCompetitorsImpl) randomDevice() competitor_model.Device {
@@ -99,9 +110,9 @@ func (u *ProcessCompetitorsImpl) loopForCities(ctx context.Context, term string,
 		}
 
 		competitorCityWithLinksBaseModel := &competitor_model.CompetitorCityWithLinksBaseModel{
-			Name:  string(city),
-			Links: links,
+			Name: string(city),
 		}
+		competitorCityWithLinksBaseModel.Links = links
 
 		competitorsCities = append(competitorsCities, competitorCityWithLinksBaseModel)
 	}
