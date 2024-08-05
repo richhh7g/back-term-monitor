@@ -6,11 +6,13 @@ import (
 	brand_model "github.com/richhh7g/back-term-monitor/internal/domain/model/brand"
 	mongo_document "github.com/richhh7g/back-term-monitor/internal/infra/data/client/mongo/document"
 	mongo_repository "github.com/richhh7g/back-term-monitor/internal/infra/data/client/mongo/repository"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type Brand interface {
 	Create(ctx context.Context, input *brand_model.CreateBrandInputModel) (bool, error)
 	FindProcessingBrand(ctx context.Context) (*brand_model.BrandBase, error)
+	UpdateSuccess(ctx context.Context, id string) (bool, error)
 }
 
 type BrandImpl struct {
@@ -61,4 +63,15 @@ func (d *BrandImpl) FindProcessingBrand(ctx context.Context) (*brand_model.Brand
 		Terms:   brandDb.BrandTerms,
 		Results: results,
 	}, nil
+}
+
+func (d *BrandImpl) UpdateSuccess(ctx context.Context, id string) (bool, error) {
+	objectId, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return false, err
+	}
+
+	return d.repository.Update(ctx, objectId, &mongo_repository.UpdateBrandParams{
+		Status: mongo_document.BrandSuccessStatus,
+	})
 }

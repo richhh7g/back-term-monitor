@@ -7,6 +7,7 @@ import (
 	mongo_client "github.com/richhh7g/back-term-monitor/internal/infra/data/client/mongo"
 	mongo_document "github.com/richhh7g/back-term-monitor/internal/infra/data/client/mongo/document"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -23,11 +24,19 @@ type FindOneBrandByParams struct {
 	Status string
 }
 
+type UpdateBrandParams struct {
+	Email      string               `bson:"email"`
+	Status     string               `bson:"status"`
+	Results    []primitive.ObjectID `bson:"results"`
+	BrandTerms []string             `bson:"brand_terms"`
+}
+
 const brandCollectionName = "brand"
 
 type BrandRepository interface {
 	Create(ctx context.Context, input *CreateBrandParams, opts ...*options.InsertOneOptions) (*mongo_document.Brand, error)
 	FindOneBy(ctx context.Context, input *FindOneBrandByParams, opts ...*options.FindOneOptions) (*mongo_document.Brand, error)
+	Update(ctx context.Context, brandId primitive.ObjectID, input *UpdateBrandParams, opts ...*options.UpdateOptions) (bool, error)
 }
 
 type BrandRepositoryImpl struct {
@@ -87,4 +96,20 @@ func (r *BrandRepositoryImpl) FindOneBy(ctx context.Context, input *FindOneBrand
 	}
 
 	return &document, nil
+}
+
+func (r *BrandRepositoryImpl) Update(ctx context.Context, brandId primitive.ObjectID, input *UpdateBrandParams, opts ...*options.UpdateOptions) (bool, error) {
+	filter := bson.M{"_id": brandId}
+
+	updateFields := bson.M{"$set": input}
+	result, err := r.brandCollection.UpdateOne(ctx, filter, updateFields, opts...)
+	if err != nil {
+		return false, err
+	}
+
+	if result.MatchedCount == 0 {
+		return false, mongo.ErrNoDocuments
+	}
+
+	return true, nil
 }

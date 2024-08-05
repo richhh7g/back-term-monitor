@@ -41,6 +41,15 @@ func (u *ProcessCompetitorsImpl) Exec(ctx context.Context) ([]*competitor_model.
 		competitorsTermsBaseModel = append(competitorsTermsBaseModel, u.loopForCities(ctx, term, brandDb.ID, deviceSelected))
 	}
 
+	isCompleted, err := u.brandDataSource.UpdateSuccess(ctx, brandDb.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	if !isCompleted {
+		return nil, nil
+	}
+
 	return competitorsTermsBaseModel, nil
 }
 
