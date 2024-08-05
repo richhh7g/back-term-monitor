@@ -25,10 +25,10 @@ type FindOneBrandByParams struct {
 }
 
 type UpdateBrandParams struct {
-	Email      string               `bson:"email"`
-	Status     string               `bson:"status"`
-	Results    []primitive.ObjectID `bson:"results"`
-	BrandTerms []string             `bson:"brand_terms"`
+	Email      string               `bson:"email,omitempty"`
+	Status     string               `bson:"status,omitempty"`
+	Results    []primitive.ObjectID `bson:"results,omitempty"`
+	BrandTerms []string             `bson:"brand_terms,omitempty"`
 }
 
 const brandCollectionName = "brand"
@@ -101,8 +101,27 @@ func (r *BrandRepositoryImpl) FindOneBy(ctx context.Context, input *FindOneBrand
 func (r *BrandRepositoryImpl) Update(ctx context.Context, brandId primitive.ObjectID, input *UpdateBrandParams, opts ...*options.UpdateOptions) (bool, error) {
 	filter := bson.M{"_id": brandId}
 
-	updateFields := bson.M{"$set": input}
-	result, err := r.brandCollection.UpdateOne(ctx, filter, updateFields, opts...)
+	updateFields := bson.M{}
+	if input.Email != "" {
+		updateFields["email"] = input.Email
+	}
+	if input.Status != "" {
+		updateFields["status"] = input.Status
+	}
+	if len(input.Results) > 0 {
+		updateFields["results"] = input.Results
+	}
+	if len(input.BrandTerms) > 0 {
+		updateFields["brand_terms"] = input.BrandTerms
+	}
+
+	if len(updateFields) == 0 {
+		return false, nil
+	}
+
+	update := bson.M{"$set": updateFields}
+
+	result, err := r.brandCollection.UpdateOne(ctx, filter, update, opts...)
 	if err != nil {
 		return false, err
 	}
@@ -111,5 +130,5 @@ func (r *BrandRepositoryImpl) Update(ctx context.Context, brandId primitive.Obje
 		return false, mongo.ErrNoDocuments
 	}
 
-	return true, nil
+	return result.ModifiedCount > 0, nil
 }
