@@ -20,10 +20,10 @@ type SerpApiImpl struct {
 
 func NewSerpApiClient() SerpApi {
 	client := resty.New()
-	client.BaseURL = environment.Get[string]("SERPAPI_BASE_URL")
+	client.BaseURL = environment.Get[string]("SERP_BASE_URL")
 	client.Header.Add("Content-Type", "application/json")
 
-	apiKey := environment.Get[string]("SERPAPI_API_KEY")
+	apiKey := environment.Get[string]("SERP_API_KEY")
 
 	return &SerpApiImpl{
 		driver: client,
