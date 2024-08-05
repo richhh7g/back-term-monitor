@@ -1,0 +1,11 @@
+# Server Messages
+- Key: "server.error.internal"
+  Default: "Internal server error."
+
+# Brand Messages
+- Key: "brand.success.create"
+  Default: "Within 5 minutes you will receive an email with a list of potential brands that use these search terms."
+
+# Email Messages
+- Key: "email.send_potential_competitors.subject"
+  Default: "Potential brands that use these search terms"
