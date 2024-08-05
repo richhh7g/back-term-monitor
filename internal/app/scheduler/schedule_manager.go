@@ -11,11 +11,16 @@ type scheduleManagerImpl struct {
 }
 
 func NewScheduleManager() *scheduleManagerImpl {
+	cronLog := cron.VerbosePrintfLogger(log.Default())
+
 	cronOptions := []cron.Option{
 		cron.WithSeconds(),
-		cron.WithLogger(cron.VerbosePrintfLogger(log.Default())),
+		cron.WithChain(cron.SkipIfStillRunning(cronLog)),
+		cron.WithLogger(cronLog),
 	}
 	cron := cron.New(cronOptions...)
+
+	cron.Start()
 
 	return &scheduleManagerImpl{
 		driver: cron,
@@ -26,6 +31,6 @@ func (s *scheduleManagerImpl) AddSchedule(schedule cron.Schedule, job cron.Job) 
 	return s.driver.Schedule(schedule, job)
 }
 
-func (s *scheduleManagerImpl) Start() {
-	s.driver.Start()
+func (s *scheduleManagerImpl) Stop() {
+	s.driver.Stop()
 }
