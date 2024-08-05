@@ -34,6 +34,16 @@ type CompetitorBaseModel struct {
 	BrandID string
 }
 
+type CompetitorTermBaseModel struct {
+	Term   string
+	Cities []*CompetitorCityWithLinksBaseModel
+}
+
+type CompetitorCityWithLinksBaseModel struct {
+	Name  string
+	Links []string
+}
+
 type CreateCompetitorInputModel struct {
 	City    City
 	Term    string
