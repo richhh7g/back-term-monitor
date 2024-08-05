@@ -5,3 +5,7 @@
 # Brand Messages
 - Key: "brand.success.create"
   Default: "Dentro de 5 minutos receberá um e-mail com a lista de potenciais marcas que usam esses termos de pesquisa."
+
+# Email Messages
+- Key: "email.send_potential_competitors.subject"
+  Default: "Marcas que usam os termos de pesquisa"

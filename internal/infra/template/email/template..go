@@ -6,6 +6,10 @@ import (
 	"path"
 )
 
+const (
+	PotentialCompetitorsTemplate = "potential_competitors.template.html"
+)
+
 func ParseTemplate(templateFileName string, data interface{}) (*string, error) {
 	templatePath := path.Join("internal", "infra", "template", "email", templateFileName)
 
