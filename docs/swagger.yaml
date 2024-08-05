@@ -1,0 +1,55 @@
+basePath: /api
+definitions:
+  ChecarTermoBody:
+    properties:
+      email:
+        example: email@example.com
+        type: string
+      termos:
+        example:
+        - Term One
+        - Term Two
+        items:
+          type: string
+        type: array
+    required:
+    - email
+    - termos
+    type: object
+info:
+  contact:
+    email: richhh7g@protonmail.com
+    name: Richhh7g
+    url: https://github.com/richhh7g
+  description: API do [Term Monitor](https://github.com/richhh7g/back-term-monitor)
+    para monitorar concorrentes que usam termos de marca em resultados patrocinados
+    do Google.
+  license:
+    name: MIT
+    url: https://github.com/richhh7g/back-term-monitor/blob/main/LICENSE
+  title: Term Monitor
+  version: 1.0.0
+paths:
+  /v1/check-term:
+    post:
+      consumes:
+      - application/json
+      description: Faça a checagem de termos de marca nos resultados de pesquisa do
+        Google.
+      parameters:
+      - description: Corpo da requisição
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/ChecarTermoBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Checar termos de marca
+      tags:
+      - v1
+      - Termos
+swagger: "2.0"

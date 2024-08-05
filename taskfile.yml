@@ -1,0 +1,53 @@
+version: "3"
+
+dotenv: ['cmd/server/.env']
+
+vars:
+  SERVER_PATH: "cmd/server"
+  MONGO_MIGRATIONS_PATH: "internal/infra/data/client/mongo/migration"
+
+tasks:
+  start:
+    cmd: go run {{ .SERVER_PATH }}/main.go
+    desc: Start server
+
+  build:
+    cmd: go build -o bin/server-bin {{ .SERVER_PATH }}/main.go
+    desc: Build server
+
+  docker:up:
+    cmd: docker compose -f {{ .SERVER_PATH }}/docker-compose.yml up
+    desc: Building and running containers from docker-compose
+  docker:down:
+    cmd: docker compose -f {{ .SERVER_PATH }}/docker-compose.yml down
+    desc: Stopping and removing containers from docker-compose
+  docker:logs:
+    cmd: docker compose -f {{ .SERVER_PATH }}/docker-compose.yml logs -f
+    desc: Show logs from docker-compose
+  docker:monitor:
+    cmd: docker compose -f {{ .SERVER_PATH }}/docker-compose.yml stats
+    desc: Show stats from docker-compose
+
+  generate:docs:
+    desc: Generate swagger docs
+    cmd: swag init -g cmd/server/main.go -ot go,yaml
+
+  migration:generate:
+    desc: Generate migration
+    cmd: migrate create --ext json --dir "{{ .MONGO_MIGRATIONS_PATH }}" --tz UTC {{.CLI_ARGS}}
+  migration:up:
+    desc: Run migrations
+    cmd: migrate --path="{{ .MONGO_MIGRATIONS_PATH }}" --database "$MONGO_URL/$MONGO_DB?ssl=false&authSource=admin" up {{.CLI_ARGS}}
+    silent: true
+  migration:rollback:
+    desc: Rollback migrations
+    cmd: migrate --path="{{ .MONGO_MIGRATIONS_PATH }}" --database "$MONGO_URL/$MONGO_DB?ssl=false&authSource=admin" down {{.CLI_ARGS}}
+    silent: true
+
+  mod:
+    cmds: [go mod download, go mod tidy]
+    desc: Tidy go modules
+    aliases: [mod]
+  mod:clean:
+    cmd: go clean -modcache
+    desc: Clear go modules cache
