@@ -8,7 +8,7 @@
 
 ## Descrição
 
-Este projeto e o backend da API do Term Alarms para monitorar concorrentes que usam termos de marca em resultados patrocinados do Google.
+Este projeto e o backend do Term Monitor, uma ferramenta de monitoramento de termos de marca para sites concorrentes que são patrocinados usando Google Ads.
 
 ## Requisitos
 
@@ -28,34 +28,6 @@ Crie um arquivo `.env` com as configurações necessárias. Você pode usar o ar
 
 ```bash
 cp cmd/server/.env.example cmd/server/.env
-```
-
-### Migrações
-
-Para gerenciar migrações do banco de dados `MongoDB`, você pode usar a ferramenta `migrate`. A seguir estão as instruções para criar, subir e voltar migrações.
-
-#### 1. Criar nova migração
-
-Para criar uma nova migração, execute o comando abaixo a partir do diretório raiz do projeto:
-
-```bash
-migrate create --ext json --dir "internal/infra/data/client/mongo/migration" --tz UTC nome_da_migração
-```
-
-#### 2. Subir Migrações
-
-Para aplicar as migrações, execute o comando abaixo a partir do diretório raiz do projeto:
-
-```bash
-migrate --path="internal/infra/data/client/mongo/migration" --database "mongodb://user:password@host:port/dbname?ssl=false&authSource=admin" up
-```
-
-#### 3. Voltar Migrações
-
-Para reverter as migrações, execute o comando abaixo a partir do diretório raiz do projeto:
-
-```bash
-migrate --path="internal/infra/data/client/mongo/migration" --database "mongodb://user:password@host:port/dbname?ssl=false&authSource=admin" down numeroDeMigraçõesParaReverter
 ```
 
 ### Executando Localmente
@@ -110,10 +82,38 @@ Para monitorar o desempenho dos containers, execute o comando abaixo a partir do
 docker compose -f cmd/server/docker-compose.yml stats
 ```
 
+### Migrações
+
+Para gerenciar migrações do banco de dados `MongoDB`, você pode usar a ferramenta `migrate`. A seguir estão as instruções para criar, subir e voltar migrações.
+
+#### 1. Criar nova migração
+
+Para criar uma nova migração, execute o comando abaixo a partir do diretório raiz do projeto:
+
+```bash
+migrate create --ext json --dir "internal/infra/data/client/mongo/migration" --tz UTC nome_da_migração
+```
+
+#### 2. Subir Migrações
+
+Para aplicar as migrações, execute o comando abaixo a partir do diretório raiz do projeto:
+
+```bash
+migrate --path="internal/infra/data/client/mongo/migration" --database "mongodb://user:password@host:port/dbname?ssl=false&authSource=admin" up
+```
+
+#### 3. Voltar Migrações
+
+Para reverter as migrações, execute o comando abaixo a partir do diretório raiz do projeto:
+
+```bash
+migrate --path="internal/infra/data/client/mongo/migration" --database "mongodb://user:password@host:port/dbname?ssl=false&authSource=admin" down numeroDeMigraçõesParaReverter
+```
+
 ## Acessando a Documentação
 
 A documentação completa da API pode ser acessada através do seguinte link:
-[http://localhost:3000/docs/index.html](http://localhost:3000/docs/index.html)
+[http://localhost:3333/docs/index.html](http://localhost:3333/docs/index.html)
 
 ### Gerando a Documentação com Swagger
 

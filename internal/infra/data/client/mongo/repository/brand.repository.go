@@ -31,7 +31,7 @@ type UpdateBrandParams struct {
 	BrandTerms []string             `bson:"brand_terms,omitempty"`
 }
 
-const brandCollectionName = "brand"
+const brandCollectionName = "brands"
 
 type BrandRepository interface {
 	Create(ctx context.Context, input *CreateBrandParams, opts ...*options.InsertOneOptions) (*mongo_document.Brand, error)
