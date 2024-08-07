@@ -58,9 +58,10 @@ type GoogleAdsResponse struct {
 	AdCreatives    []adCreative     `json:"ad_creatives"`
 }
 
-type Advertisement struct {
+type advertisement struct {
 	Link         string `json:"link"`
 	Title        string `json:"title"`
+	Source       string `json:"source"`
 	Description  string `json:"description"`
 	TrackingLink string `json:"tracking_link"`
 }
@@ -73,5 +74,5 @@ type GoogleSearchRequest struct {
 
 type GoogleSearchResponse struct {
 	SearchMetadata searchMetadata  `json:"search_metadata"`
-	Ads            []Advertisement `json:"ads"`
+	Ads            []advertisement `json:"ads"`
 }
