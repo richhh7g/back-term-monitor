@@ -20,7 +20,7 @@ type CreateCompetitorParams struct {
 	Location string
 }
 
-const competitorCollectionName = "competitor"
+const competitorCollectionName = "competitors"
 
 type CompetitorRepository interface {
 	Create(ctx context.Context, input *CreateCompetitorParams, opts ...*options.InsertOneOptions) (*mongo_document.Competitor, error)
