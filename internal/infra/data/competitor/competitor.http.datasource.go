@@ -48,9 +48,14 @@ func (d *CompetitorHttpImpl) FindTerm(ctx context.Context, input *competitor_mod
 			return nil, err
 		}
 
+		link := advertisement.Link
+		if link == "" {
+			link = mapSourceToLink(advertisement.Source)
+		}
+
 		searchTerms = append(searchTerms, &competitor_model.SearchTermDataModel{
 			City:             input.City,
-			Link:             advertisement.Link,
+			Link:             link,
 			Term:             input.Term,
 			Device:           input.Device,
 			ProcessedAt:      processedAt,
