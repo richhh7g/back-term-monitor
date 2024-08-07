@@ -1,6 +1,7 @@
 package competitor_datasource
 
 import (
+	"fmt"
 	"strings"
 
 	competitor_model "github.com/richhh7g/back-term-monitor/internal/domain/model/competitor"
@@ -47,4 +48,10 @@ func mapDeviceToDeviceClient(device competitor_model.Device) *serpapi_client.Dev
 	}
 
 	return nil
+}
+
+func mapSourceToLink(source string) string {
+	httpPrefix := "https://"
+
+	return fmt.Sprintf("%s%s", httpPrefix, source)
 }
